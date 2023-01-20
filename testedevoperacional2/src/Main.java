@@ -147,11 +147,14 @@ public class Main {
                                 escolhaProduto = sc.nextInt();
                                 for (Produto produtoSearch : produtos) {
                                     if (produtoSearch.getId().equals(escolhaProduto))
+                                        produtoSearch.setQuantidade(produtoSearch.getQuantidade() - 1);
                                         carrinho.add(produtoSearch);
+
                                 }
                             } while (escolhaProduto != 0);
                             System.out.println("************************************************************");
                             System.out.println("Resumo da compra: ");
+
                             carrinho.stream().forEach(x -> {
                                 if (x.getEmpresa().getId().equals(escolhaEmpresa)) {
                                     System.out.println(x.getId() + " - " + x.getNome() + "    R$" + x.getPreco());
@@ -162,7 +165,10 @@ public class Main {
                             Cliente clienteLogado = clientes.stream()
                                     .filter(x -> x.getUsername().equals(usuarioLogado.getUsername()))
                                     .collect(Collectors.toList()).get(0);
+                            clienteLogado.setItensComprados(carrinho);
                             Venda venda = criarVenda(carrinho, empresaEscolhida, clienteLogado, vendas);
+
+                            clienteLogado.setItensComprados(carrinho);
                             System.out.println("Total: R$" + venda.getValor());
                             System.out.println("************************************************************");
                             carrinho.clear();
@@ -177,7 +183,11 @@ public class Main {
                                     System.out.println("************************************************************");
                                     System.out.println("Compra de código: " + venda.getCódigo() + " na empresa "
                                             + venda.getEmpresa().getNome() + ": ");
-                                    venda.getItens().stream().forEach(x -> {
+                                        if(venda.getCliente().getItensComprados().isEmpty()){
+                                            System.out.println("não efetuou nenhuma compra");
+                                        }
+                                    venda.getCliente().getItensComprados().stream().forEach(x -> {
+
                                         System.out.println(x.getId() + " - " + x.getNome() + "    R$" + x.getPreco());
                                     });
                                     System.out.println("Total: R$" + venda.getValor());

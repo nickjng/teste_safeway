@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class Cliente {
     private String cpf;
@@ -5,12 +6,18 @@ public class Cliente {
     private String username;
     private Integer idade;
 
+    private List<Produto> itensComprados;
+
     public Cliente(String cpf, String nome, String username, Integer idade) {
         super();
         this.cpf = cpf;
         this.nome = nome;
         this.username = username;
         this.idade = idade;
+    }
+
+    public Cliente( Cliente cliente,List<Produto> itensComprados) {
+        this.itensComprados = itensComprados;
     }
 
     public String getCpf() {
@@ -46,4 +53,11 @@ public class Cliente {
         this.idade = idade;
     }
 
+    public List<Produto> getItensComprados() {
+        return itensComprados;
+    }
+
+    public void setItensComprados(List<Produto> itensComprados) {
+        this.itensComprados = itensComprados;
+    }
 }
